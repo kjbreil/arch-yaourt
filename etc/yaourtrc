@@ -1,3 +1,4 @@
 NO_TESTDB=0
 EXPORT=2
+EXPORTDIR=/opt/build/pkg/
 NOCONFIRM=1

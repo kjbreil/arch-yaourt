@@ -5,15 +5,22 @@ REPO = arch-yaourt
 NAME = arch-yaourt
 INSTANCE = default
 
-VOLUMES=-v $(CURDIR)/:/opt/build/ 
+# VOLUMES=-v $(CURDIR)/:/opt/build/ 
 
-.PHONY: image push push_latest shell run start stop rm release
+.PHONY: image push shell run start stop rm release
 
 image:
-	docker build --no-cache -t $(NS)/$(REPO) -t $(NS)/$(REPO) -t $(NS)/$(REPO):$(VERSION) .
+	docker build -t $(NS)/$(REPO) -t $(NS)/$(REPO):$(VERSION) .
 
 push:
+	docker push $(NS)/$(REPO):$(VERSION)
 	docker push $(NS)/$(REPO)
+
+heim:
+	docker tag $(NS)/$(REPO):$(VERSION) heimdall.norgenet.net:5000/$(REPO):$(VERSION)
+	docker tag $(NS)/$(REPO):$(VERSION) heimdall.norgenet.net:5000/$(REPO)
+	docker push heimdall.norgenet.net:5000/$(REPO):$(VERSION)
+	docker push heimdall.norgenet.net:5000/$(REPO)
 
 shell:
 	docker run --rm --name $(NAME)-$(INSTANCE) -i -t $(PORTS) $(VOLUMES) $(ENV) $(NS)/$(REPO):$(VERSION) /bin/bash
@@ -35,4 +42,4 @@ rm:
 
 default: image
 
-release: image push push_latest
+release: image push 
