@@ -19,8 +19,6 @@ push:
 heim:
 	docker tag $(NS)/$(REPO):$(VERSION) heimdall.norgenet.net:5000/$(REPO):$(VERSION)
 	docker tag $(NS)/$(REPO):$(VERSION) heimdall.norgenet.net:5000/$(REPO)
-	docker push heimdall.norgenet.net:5000/$(REPO):$(VERSION)
-	docker push heimdall.norgenet.net:5000/$(REPO)
 
 shell:
 	docker run --rm --name $(NAME)-$(INSTANCE) -i -t $(PORTS) $(VOLUMES) $(ENV) $(NS)/$(REPO):$(VERSION) /bin/bash
