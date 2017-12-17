@@ -9,6 +9,10 @@ INSTANCE = default
 
 .PHONY: image push shell run start stop rm release
 
+default: release
+
+release: no-cache push 
+
 image:
 	docker build -t $(NS)/$(REPO) -t $(NS)/$(REPO):$(VERSION) .
 
@@ -40,7 +44,3 @@ stop:
 
 rm:
 	docker rm $(NAME)-$(INSTANCE)
-
-default: image
-
-release: image push 
